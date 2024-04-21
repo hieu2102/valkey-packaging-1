@@ -129,7 +129,7 @@ install -pDm644 src/%{name}module.h %{buildroot}%{_includedir}/%{name}module.h
 install -pDm644 %{SOURCE8} %{buildroot}%{_rpmmacrodir}/macros.%{name}
 install -Dpm 644 %{SOURCE6} %{buildroot}%{_sysconfdir}/sysconfig/%{name}
 install -Dpm 644 %{SOURCE7} %{buildroot}%{_sysconfdir}/sysconfig/%{name}-sentinel
-install -Dpm 755 %{SOURCE9} %{buildroot}%{_libexecdir}/redisconf_to_valkeyconf.sh
+install -Dpm 755 %{SOURCE9} %{buildroot}%{_libexecdir}/conf_update.sh
 
 
 %pre
@@ -142,7 +142,7 @@ install -Dpm 755 %{SOURCE9} %{buildroot}%{_libexecdir}/redisconf_to_valkeyconf.s
 
 
 %post compat
-%{_libexecdir}/redisconf_to_valkeyconf.sh
+%{_libexecdir}/conf_update.sh
 
 
 %preun
