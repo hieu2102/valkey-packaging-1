@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main  # Run the workflow on push to main branch
+
+jobs:
+  build_and_execute_script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Spin up Oracle Linux 8 Docker
+        run: |
+          docker run --name ol8-container -v "${{ github.workspace }}/scripts:/scripts" -d oraclelinux:8
+          docker exec ol8-container chmod +x /scripts/valkey_builder.sh
+          docker exec ol8-container mkdir test
+
+      - name: Execute script in Docker container
+        run: |
+          docker exec ol8-container /scripts/valkey_builder.sh --install_deps=1 iibuilddir=/test/
+
+      - name: Retrieve artifact
+        run: |
+          docker cp ol8-container:/source_tarball/valkey*.tar.gz ./valkey.tar.gz
+
+      - name: Upload artifact to GitHub
+        uses: actions/upload-artifact@v2
+        with:
+          name: output-artifact
+          path: valkey.tar.gz
+
+      # Repeat steps for another container etc., as per your initial multi-step requirement
