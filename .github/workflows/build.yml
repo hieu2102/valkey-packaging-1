@@ -12,13 +12,33 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Docker
+      - name: Remove existing Docker and Containerd
+        run: |
+          sudo apt-get remove -y docker docker-engine docker.io containerd runc
+          sudo apt-get purge -y docker docker-engine docker.io containerd runc
+          sudo apt-get autoremove -y
+
+      - name: Update and prepare the system
         run: |
           sudo apt-get update
-          sudo apt-get install -y docker.io
-          sudo systemctl start docker
-          sudo docker info
+          sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
 
+      - name: Add Docker’s official GPG key
+        run: |
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+      - name: Set up the stable repository
+        run: |
+          sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+      - name: Install Docker Engine
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+
+      - name: Verify Docker installation
+        run: |
+          sudo docker run hello-world
       - name: Run Docker commands
         run: |
           # Example of pulling and running an Oracle Linux container
