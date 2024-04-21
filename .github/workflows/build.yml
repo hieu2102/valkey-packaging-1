@@ -1,35 +1,43 @@
-name: Build
+name: Docker Workflow on Ubuntu Runner
 
 on:
   push:
     branches:
-      - main  # Run the workflow on push to main branch
+      - main  # Adjust this as necessary
 
 jobs:
-  build_and_execute_script:
+  setup_and_run_docker:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Spin up Oracle Linux 8 Docker
+      - name: Install Docker
         run: |
-          docker run --name ol8-container -v "${{ github.workspace }}/scripts:/scripts" -d oraclelinux:8
-          docker exec ol8-container chmod +x /scripts/valkey_builder.sh
-          docker exec ol8-container mkdir test
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+          sudo systemctl start docker
+          sudo docker info
+
+      - name: Run Docker commands
+        run: |
+          # Example of pulling and running an Oracle Linux container
+          sudo docker pull oraclelinux:8
+          sudo docker run --name ol8-container -v "${{ github.workspace }}/scripts:/scripts" -d oraclelinux:8 /bin/sh -c "while true; do sleep 30; done"
+          sudo docker exec ol8-container chmod +x /scripts/valkey_builder.sh
 
       - name: Execute script in Docker container
         run: |
-          docker exec ol8-container /scripts/valkey_builder.sh --install_deps=1 iibuilddir=/test/
+          sudo docker exec ol8-container mkdir /test
+          sudo docker exec ol8-container /scripts/valkey_builder.sh --builddir=/test --install_deps=1
+          sudo docker exec ol8-container /scripts/valkey_builder.sh --builddir=/test --get_sources=1
 
       - name: Retrieve artifact
         run: |
-          docker cp ol8-container:/source_tarball/valkey*.tar.gz ./valkey.tar.gz
+          sudo docker cp ol8-container:/source_tarball/output.tar.gz ./valkey.tar.gz
 
       - name: Upload artifact to GitHub
         uses: actions/upload-artifact@v2
         with:
           name: output-artifact
           path: valkey.tar.gz
-
-      # Repeat steps for another container etc., as per your initial multi-step requirement
