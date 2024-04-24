@@ -3,7 +3,8 @@ set -e
 
 # Ensure the systemd daemon is reloaded to recognize new units
 systemctl daemon-reload
-
+chown valkey:root /etc/valkey/valkey.conf
+chown valkey:root /etc/valkey/sentinel.conf
 # Enable and start valkey services
 systemctl enable valkey.service
 systemctl start valkey.service
