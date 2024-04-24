@@ -104,12 +104,8 @@ get_sources(){
     REVISION=$(git rev-parse --short HEAD)
     echo "REVISION=${REVISION}" >> ${WORKDIR}/valkey.properties
     git clone https://github.com/EvgeniyPatlan/valkey-packaging.git packaging
-    #mv packaging/debian ./
-    #cd debian || exit
-    #here you can add debian part
-    #cd ../
-    mkdir rpm
-    mv packaging/rpm/* rpm/
+    mv packaging/debian ./
+    mv packaging/rpm ./
     cd ${WORKDIR} || exit
     source valkey.properties
     #
