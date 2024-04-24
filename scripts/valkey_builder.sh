@@ -148,7 +148,7 @@ install_deps() {
     fi
 
     if [ "x$OS" = "xrpm" ]; then
-      yum -y install wget curl git rpmdevtools rpm-build gcc make
+      yum -y install wget curl git rpmdevtools rpm-build gcc make openssl-devel pkgconfig systemd-devel
       yum clean all
       RHEL=$(rpm --eval %rhel)
     else
@@ -156,7 +156,7 @@ install_deps() {
         export DEBIAN
         ARCH=$(uname -m)
         export ARCH
-        INSTALL_LIST="libsystemd-dev build-essential debconf debhelper clang-11 devscripts dh-exec git wget build-essential fakeroot devscripts curl make gcc dh-python"
+        INSTALL_LIST="pkg-config libsystemd-dev build-essential debconf debhelper clang-11 devscripts dh-exec git wget build-essential fakeroot devscripts curl make gcc dh-python"
 	apt-get update
         DEBIAN_FRONTEND=noninteractive apt-get -y install ${INSTALL_LIST}
     fi
