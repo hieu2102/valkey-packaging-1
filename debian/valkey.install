@@ -1,4 +1,5 @@
 usr/bin/valkey-*
+usr/lib/valkey/*
 etc/sysusers.d/valkey.conf
 etc/logrotate.d/valkey
 lib/systemd/system/valkey.service
