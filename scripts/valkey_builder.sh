@@ -298,7 +298,7 @@ build_source_deb(){
     fi
     rm -rf valkey*
     get_tar "source_tarball"
-    rm -f *.dsc *.orig.tar.gz *.debian.tar.gz *.changes
+    rm -f *.dsc *.orig.tar.gz *.changes
     #
     TARFILE=$(basename $(find . -name 'valkey*.tar.gz' | sort | tail -n1))
     DEBIAN=$(lsb_release -sc)
@@ -323,11 +323,9 @@ build_source_deb(){
     cd ../
     mkdir -p $WORKDIR/source_deb
     mkdir -p $CURDIR/source_deb
-    cp *.debian.tar.* $WORKDIR/source_deb
     cp *_source.changes $WORKDIR/source_deb
     cp *.dsc $WORKDIR/source_deb
     cp *.orig.tar.gz $WORKDIR/source_deb
-    cp *.debian.tar.* $CURDIR/source_deb
     cp *_source.changes $CURDIR/source_deb
     cp *.dsc $CURDIR/source_deb
     cp *.orig.tar.gz $CURDIR/source_deb
@@ -344,7 +342,7 @@ build_deb(){
         echo "It is not possible to build source deb here"
         exit 1
     fi
-    for file in 'dsc' 'orig.tar.gz' 'changes' 'debian.tar*'
+    for file in 'dsc' 'orig.tar.gz' 'changes' 
     do
         get_deb_sources $file
     done
