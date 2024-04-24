@@ -156,11 +156,8 @@ install_deps() {
         export DEBIAN
         ARCH=$(uname -m)
         export ARCH
-        if [ "x${DEBIAN}" != "xfocal" ] && [ "x${DEBIAN}" != "xbullseye" ] && [ "x${DEBIAN}" != "xjammy" ]; then
-            INSTALL_LIST="libsystemd-dev build-essential debconf debhelper clang-11 devscripts dh-exec git wget build-essential fakeroot devscripts python3-psycopg2 python-setuptools python-dev libyaml-dev python3-virtualenv dh-virtualenv python3-psycopg2 wget git ruby ruby-dev rubygems build-essential curl golang libjs-mathjax pyflakes3 python3-boto python3-dateutil python3-dnspython python3-etcd  python3-flake8 python3-kazoo python3-mccabe python3-mock python3-prettytable python3-psutil python3-pycodestyle python3-pytest python3-pytest-cov python3-setuptools python3-sphinx python3-sphinx-rtd-theme python3-tz python3-tzlocal sphinx-common python3-click python3-doc python3-cdiff dh-python"
-        else
-            INSTALL_LIST="libsystemd-dev build-essential debconf debhelper clang-11 devscripts dh-exec git wget build-essential fakeroot devscripts python3-psycopg2 python2-dev libyaml-dev python3-virtualenv python3-psycopg2 wget git ruby ruby-dev rubygems build-essential curl golang libjs-mathjax pyflakes3 python3-boto python3-dateutil python3-dnspython python3-etcd  python3-flake8 python3-kazoo python3-mccabe python3-mock python3-prettytable python3-psutil python3-pycodestyle python3-pytest python3-pytest-cov python3-setuptools python3-sphinx python3-sphinx-rtd-theme python3-tz python3-tzlocal sphinx-common python3-click python3-doc python3-cdiff dh-python"
-        fi
+        INSTALL_LIST="libsystemd-dev build-essential debconf debhelper clang-11 devscripts dh-exec git wget build-essential fakeroot devscripts curl make gcc dh-python"
+	apt-get update
         DEBIAN_FRONTEND=noninteractive apt-get -y install ${INSTALL_LIST}
     fi
     return;
