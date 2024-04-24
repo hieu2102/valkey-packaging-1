@@ -5,7 +5,7 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
-EnvironmentFile=-/etc/sysconfig/valkey-sentinel
+EnvironmentFile=-/etc/default/valkey-sentinel
 ExecStart=/usr/bin/valkey-sentinel /etc/valkey/sentinel.conf --daemonize no --supervised systemd $OPTIONS
 Type=notify
 User=valkey
