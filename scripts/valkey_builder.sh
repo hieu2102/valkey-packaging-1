@@ -156,7 +156,7 @@ install_deps() {
         export DEBIAN
         ARCH=$(uname -m)
         export ARCH
-        INSTALL_LIST="pkg-config libsystemd-dev build-essential debconf debhelper clang-11 devscripts dh-exec git wget build-essential fakeroot devscripts curl make gcc dh-python"
+        INSTALL_LIST="pkg-config libsystemd-dev build-essential debconf debhelper devscripts dh-exec git wget build-essential fakeroot devscripts curl make gcc dh-python"
 	apt-get update
         DEBIAN_FRONTEND=noninteractive apt-get -y install ${INSTALL_LIST}
     fi
