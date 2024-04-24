@@ -14,4 +14,4 @@ etc/sysconfig/valkey
 etc/sysconfig/valkey-sentinel
 etc/default/valkey
 etc/valkey/valkey.conf
-etc/valkey/santinel.conf
+etc/valkey/sentinel.conf

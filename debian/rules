@@ -32,7 +32,7 @@ override_dh_auto_install:
 
 	install -D -m 0644 debian/../src/modules/*  debian/valkey/usr/lib/valkey/modules/
 	install -D -m 0644 debian/../valkey.conf debian/valkey/etc/valkey/valkey.conf
-	install -D -m 0644 debian/../santinel.conf debian/valkey/etc/valkey/santinel.conf
+	install -D -m 0644 debian/../sentinel.conf debian/valkey/etc/valkey/sentinel.conf
 	# Service configuration
 	install -D -m 0644 debian/valkey.service debian/valkey/lib/systemd/system/valkey.service
 	install -D -m 0644 debian/valkey-sentinel.service debian/valkey/lib/systemd/system/valkey-sentinel.service
