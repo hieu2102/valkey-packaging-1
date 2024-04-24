@@ -2,4 +2,4 @@ valkey (7.2.5-1) unstable; urgency=medium
 
   * Initial build.
 
- -- Evgeniy Patlan <evgeniy.patlan@percona.com>  Wed, 24 Apr 2024 18:20:11 +0300
+ -- Evgeniy Patlan <evgeniy.patlan@percona.com>  Wed, 24 Apr 2024 16:20:01 +0000
