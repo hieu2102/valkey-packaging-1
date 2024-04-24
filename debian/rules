@@ -30,7 +30,7 @@ override_dh_auto_install:
 	install -d debian/valkey/etc/valkey
 	install -d debian/valkey/usr/lib/valkey/modules
 
-	install -D -m 0644 debian/src/modules/*  debian/valkey/usr/lib/valkey/modules/
+	install -D -m 0644 debian/../src/modules/*  debian/valkey/usr/lib/valkey/modules/
 	install -D -m 0644 debian/../valkey.conf debian/valkey/etc/valkey/valkey.conf
 	install -D -m 0644 debian/../santinel.conf debian/valkey/etc/valkey/santinel.conf
 	# Service configuration
@@ -52,6 +52,14 @@ override_dh_auto_install:
 
 	# Devel package files
 	install -D -m 0644 src/valkeymodule.h debian/valkey-devel/usr/include/valkeymodule.h
+
+	mkdir -p debian/valkey/usr/share/doc/valkey/
+	cp deps/lua/COPYRIGHT debian/valkey/usr/share/doc/valkey/COPYRIGHT-lua
+	cp deps/jemalloc/COPYING debian/valkey/usr/share/doc/valkey/COPYING-jemalloc
+	cp deps/hiredis/COPYING debian/valkey/usr/share/doc/valkey/COPYING-hiredis-BSD-3-Clause
+	cp deps/hdr_histogram/LICENSE.txt debian/valkey/usr/share/doc/valkey/LICENSE-hdrhistogram
+	cp deps/hdr_histogram/COPYING.txt debian/valkey/usr/share/doc/valkey/COPYING-hdrhistogram
+	cp deps/fpconv/LICENSE.txt debian/valkey/usr/share/doc/valkey/LICENSE-fpconv
 
 override_dh_install:
 	# Additional installation steps if required
