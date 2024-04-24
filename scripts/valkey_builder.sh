@@ -326,9 +326,11 @@ build_source_deb(){
     cp *_source.changes $WORKDIR/source_deb
     cp *.dsc $WORKDIR/source_deb
     cp *.orig.tar.gz $WORKDIR/source_deb
+    cp *diff* $WORKDIR/source_deb
     cp *_source.changes $CURDIR/source_deb
     cp *.dsc $CURDIR/source_deb
     cp *.orig.tar.gz $CURDIR/source_deb
+    cp *diff* $CURDIR/source_deb
 }
 
 build_deb(){
@@ -342,7 +344,7 @@ build_deb(){
         echo "It is not possible to build source deb here"
         exit 1
     fi
-    for file in 'dsc' 'orig.tar.gz' 'changes' 
+    for file in 'dsc' 'orig.tar.gz' 'changes' 'diff*' 
     do
         get_deb_sources $file
     done
