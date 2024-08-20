@@ -1,5 +1,5 @@
 Name:              valkey
-Version:           7.2.5
+Version:           7.2.6
 Release:           1%{?dist}
 Summary:           A persistent key-value database
 License:           BSD-3-Clause AND BSD-2-Clause AND MIT AND BSL-1.0
