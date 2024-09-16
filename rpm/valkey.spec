@@ -25,7 +25,7 @@ BuildRequires:     systemd-rpm-macros
 BuildRequires:     openssl-devel
 Requires:          logrotate
 Requires(pre):     shadow-utils
-Requires(pre): /usr/bin/systemd-sysusers
+Requires(pre):     systemd
 Requires(post):    systemd
 Requires(preun):   systemd
 Requires(postun):  systemd
