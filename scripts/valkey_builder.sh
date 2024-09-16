@@ -104,6 +104,12 @@ get_sources(){
     REVISION=$(git rev-parse --short HEAD)
     echo "REVISION=${REVISION}" >> ${WORKDIR}/valkey.properties
     git clone https://github.com/EvgeniyPatlan/valkey-packaging.git packaging
+    if [ ! -z "$BRANCH" ]
+    then
+        git reset --hard
+        git clean -xdf
+        git checkout "$BRANCH"
+    fi
     mv packaging/debian ./
     mv packaging/rpm ./
     cd ${WORKDIR} || exit
