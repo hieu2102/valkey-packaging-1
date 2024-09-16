@@ -134,7 +134,7 @@ install -Dpm 755 %{SOURCE9} %{buildroot}%{_libexecdir}/conf_update.sh
 
 
 %pre
-/usr/bin/systemd-sysusers %{SOURCE4}
+/usr/bin/systemd-sysusers %{_sysusersdir}/%{name}.conf
 
 
 %post
