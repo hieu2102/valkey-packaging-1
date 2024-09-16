@@ -134,12 +134,7 @@ install -Dpm 755 %{SOURCE9} %{buildroot}%{_libexecdir}/conf_update.sh
 
 
 %pre
-%if 0%{?rhel} == 8
 /usr/bin/systemd-sysusers %{SOURCE4}
-%endif
-%if 0%{?rhel} == 9
-/usr/bin/systemd-sysusers %{SOURCE4}
-%endif
 
 
 %post
