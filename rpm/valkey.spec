@@ -25,6 +25,7 @@ BuildRequires:     systemd-rpm-macros
 BuildRequires:     openssl-devel
 Requires:          logrotate
 Requires(pre):     shadow-utils
+Requires(pre): /usr/bin/systemd-sysusers
 Requires(post):    systemd
 Requires(preun):   systemd
 Requires(postun):  systemd
@@ -131,10 +132,6 @@ install -Dpm 644 %{SOURCE6} %{buildroot}%{_sysconfdir}/sysconfig/%{name}
 install -Dpm 644 %{SOURCE7} %{buildroot}%{_sysconfdir}/sysconfig/%{name}-sentinel
 install -Dpm 755 %{SOURCE9} %{buildroot}%{_libexecdir}/conf_update.sh
 
-
-%if 0%{?rhel} == 8
-Requires(pre): /usr/bin/systemd-sysusers
-%endif
 
 %pre
 %if 0%{?rhel} == 8
