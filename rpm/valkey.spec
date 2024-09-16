@@ -133,11 +133,9 @@ install -Dpm 644 %{SOURCE7} %{buildroot}%{_sysconfdir}/sysconfig/%{name}-sentine
 install -Dpm 755 %{SOURCE9} %{buildroot}%{_libexecdir}/conf_update.sh
 
 
-%pre
-/usr/bin/systemd-sysusers %{_sysusersdir}/%{name}.conf
-
 
 %post
+/usr/bin/systemd-sysusers %{_sysusersdir}/%{name}.conf
 %systemd_post %{name}.service
 %systemd_post %{name}-sentinel.service
 
