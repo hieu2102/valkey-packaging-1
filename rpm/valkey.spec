@@ -132,8 +132,17 @@ install -Dpm 644 %{SOURCE7} %{buildroot}%{_sysconfdir}/sysconfig/%{name}-sentine
 install -Dpm 755 %{SOURCE9} %{buildroot}%{_libexecdir}/conf_update.sh
 
 
+%if 0%{?rhel} == 8
 %pre
-%sysusers_create_compat %{SOURCE4}
+Requires(pre): /usr/bin/systemd-sysusers
+/usr/bin/systemd-sysusers %{SOURCE4}
+%endif
+
+%if 0%{?rhel} == 9
+%pre
+Requires(pre): /usr/bin/systemd-sysusers
+/usr/bin/systemd-sysusers %{SOURCE4}
+%endif
 
 
 %post
