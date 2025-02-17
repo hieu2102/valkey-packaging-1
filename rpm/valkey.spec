@@ -1,5 +1,5 @@
 Name:              valkey
-Version:           8.0.0
+Version:           8.0.2
 Release:           1%{?dist}
 Summary:           A persistent key-value database
 License:           BSD-3-Clause AND BSD-2-Clause AND MIT AND BSL-1.0
