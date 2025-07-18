@@ -5,7 +5,7 @@ set -e
 systemctl stop valkey.service
 systemctl disable valkey.service
 
-systemctl enable valkey-sentinel.service
-systemctl start valkey-sentinel.service
+systemctl stop valkey-sentinel.service
+systemctl disable valkey-sentinel.service
 exit 0
 
