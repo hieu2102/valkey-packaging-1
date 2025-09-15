@@ -8,16 +8,17 @@ usage () {
     cat <<EOF
 Usage: $0 [OPTIONS]
     The following options may be given :
-        --builddir=DIR      Absolute path to the dir where all actions will be performed
-        --get_sources       Source will be downloaded from github
-        --build_src_rpm     If it is set - src rpm will be built
-        --build_src_deb  If it is set - source deb package will be built
-        --build_rpm         If it is set - rpm will be built
-        --build_deb         If it is set - deb will be built
-        --install_deps      Install build dependencies(root privilages are required)
-        --branch            Branch for build
-        --repo              Repo for build
-        --help) usage ;;
+        --builddir=DIR                  Absolute path to the dir where all actions will be performed
+        --get_sources                   Source will be downloaded from github
+        --build_src_rpm                 If it is set - src rpm will be built
+        --build_src_deb                 If it is set - source deb package will be built
+        --build_rpm                     If it is set - rpm will be built
+        --build_deb                     If it is set - deb will be built
+        --install_deps                  Install build dependencies(root privilages are required)
+        --branch                        Branch for build
+        --repo                          Repo for build
+        --use_local_packaging_script    Use local packaging scripts (located in $0/../{debian,rpm})
+        --help                          Print usage
 Example $0 --builddir=/tmp/BUILD --get_sources=1 --build_src_rpm=1 --build_rpm=1
 EOF
         exit 1
@@ -47,6 +48,7 @@ parse_arguments() {
             --branch=*) BRANCH="$val" ;;
             --repo=*) REPO="$val" ;;
             --install_deps=*) INSTALL="$val" ;;
+            --use_local_packaging_script=*) LOCAL_BUILD="$val" ;;
             --help) usage ;;
             *)
               if test -n "$pick_args"
@@ -75,6 +77,7 @@ check_workdir(){
 
 get_sources(){
     cd "${WORKDIR}" || exit
+    pwd
     if [ "${SOURCE}" = 0 ]
     then
         echo "Sources will not be downloaded"
@@ -103,15 +106,24 @@ get_sources(){
     fi
     REVISION=$(git rev-parse --short HEAD)
     echo "REVISION=${REVISION}" >> ${WORKDIR}/valkey.properties
-    git clone https://github.com/EvgeniyPatlan/valkey-packaging.git packaging
-    if [ ! -z "$BRANCH" ]
-    then
-        git reset --hard
-        git clean -xdf
-        git checkout "$BRANCH"
+
+    if [ "${LOCAL_BUILD}" = 0 ]
+    then 
+        echo "Downloading packaging scripts from github"
+        git clone https://github.com/EvgeniyPatlan/valkey-packaging.git packaging
+        if [ ! -z "$BRANCH" ]
+        then
+            git reset --hard
+            git clean -xdf
+            git checkout "$BRANCH"
+        fi
+        mv packaging/debian ./
+        mv packaging/rpm ./
+    else
+        echo "Using local packaging scripts"
+        cp -r "${BUILDER_SCRIPT_DIR}/../debian" ./
+        cp -r "${BUILDER_SCRIPT_DIR}/../rpm" ./
     fi
-    mv packaging/debian ./
-    mv packaging/rpm ./
     cd ${WORKDIR} || exit
     source valkey.properties
     #
@@ -399,10 +411,21 @@ BRANCH="8.0.2"
 REPO="https://github.com/valkey-io/valkey.git"
 PRODUCT=valkey
 DEBUG=0
+LOCAL_BUILD=0
+# get absolute path to this script
+BUILDER_SCRIPT_DIR="$(dirname "$(readlink -e "${0}")")"
+
+
 parse_arguments PICK-ARGS-FROM-ARGV "$@"
 VERSION='8.0.2'
 RELEASE='1'
 PRODUCT_FULL=${PRODUCT}-${VERSION}-${RELEASE}
+
+if [[ "${#}" == 0 ]]
+then 
+
+    usage
+fi 
 
 check_workdir
 get_system
