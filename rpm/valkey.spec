@@ -398,6 +398,11 @@ exit 0
 %endif
 
 %post
+if command -v checkmodule &> /dev/null && command -v semodule_package &> /dev/null; then \
+    checkmodule -M -m /usr/share/selinux/packages/valkey.te -o /usr/share/selinux/packages/valkey.mod; \
+    semodule_package -m /usr/share/selinux/packages/valkey.mod -o /usr/share/selinux/packages/valkey.pp -f /usr/share/selinux/packages/valkey.fc; \
+    semodule -i /usr/share/selinux/packages/valkey.pp; \
+fi
 %if 0%{?is_suse}
 %tmpfiles_create %{_tmpfilesdir}/%{name}.conf
 %service_add_post %{name}.target %{name}@.service %{name}-sentinel.target %{name}-sentinel@.service

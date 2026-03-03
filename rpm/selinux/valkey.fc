@@ -1,0 +1,5 @@
+/etc/valkey(/.*)?     --      system_u:object_r:redis_conf_t:s0
+/usr/bin/valkey-server     --      system_u:object_r:redis_exec_t:s0
+/var/lib/valkey(/.*)?     --      system_u:object_r:redis_var_lib_t:s0
+/var/log/valkey(/.*)?     --      system_u:object_r:redis_log_t:s0
+/usr/lib/systemd/system/valkey(.*)?.service     --      system_u:object_r:redis_unit_file_t:s0
